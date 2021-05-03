@@ -26,6 +26,9 @@ class Exec:
         print(key)
         self.log_fn = 'log.txt'
         self.log_fp = open(self.log_fn, 'w')
+        self.st_time = None
+        self.ed_time = None
+        self.forceEnd = False
     def exec(self):
         import os 
         print (os.getcwd())
@@ -33,12 +36,17 @@ class Exec:
     def terminate(self):
         self.p.terminate()
         pass
+    def __str__(self):
+        return self.__repr__()
+    def __repr__(self):
+        ret = f"{self.id}, {self.p.pid}, {self.st_time}, {self.ed_time}, {self.forceEnd}, {' '.join(self.m_arg)}"
+        return ret
+        
     def grep(self, pattern = '.*'):
         if self.p == None or self.p.poll():
             return
         x = open(self.log_fn, 'r').read()
-        print(x, end='')
-        print('-')
+        return x
         #lines = self.p.stdout.readline()
         #print('lines', lines)
         #print('errs', errs)
@@ -47,20 +55,37 @@ class Manager:
     def __init__(self, user):
         self.jobList = []
         self.runList = []
+        self.cnt = 0
         pass
-    def getStatus(self):
-        for x in self.jobList:
-            x.grep()
-        pass
+
     def setWork(self, job):
         self.jobList.append(job)
         self.jobList[-1].exec()
+        self.jobList[-1].id = self.cnt
+        self.cnt += 1
+
     def getWork(self):
         return self.jobList[-1]
-    def reserve(self, job, startTime, duration, forceEnd = 'false'):
-        pass
+    
+    def getList(self):
+        return self.jobList
+    
+    def monitor(self):
+
+
+    def reserve(self, job, startTime, duration, forceEnd = False):
+        self.jobList.append(job)
+        self.jobList[-1].st_time = startTime
+        self.jobList[-1].ed_time = startTime + duration
+        self.jobList[-1].forceEnd = forceEnd
+        self.jobList[-1].id = self.cnt
+        self.cnt += 1
+
     def cancle(self, jobID):
-        pass
+        for x in self.jobList:
+            if x.id == jobID:
+                x.terminate()
+        
 
 if __name__ == '__main__':
     c = Exec('python', ('TestApp.py', '-m', '1234'))
@@ -68,7 +93,9 @@ if __name__ == '__main__':
     m.setWork(c)
     import time
     for i in range(4):
-        m.getStatus()
+        print(m.getWork())
+        s = m.getWork().grep()
+        print(s)
         time.sleep(5)
     m.getWork().terminate()
-    m.getStatus()
+
