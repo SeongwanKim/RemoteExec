@@ -4,9 +4,11 @@ import shlex
 import hashlib
 
 class gitManage:
-    def __init__(self, path, url = ''):
+    def __init__(self, path, uri = ''):
+        self.basePath = path
         pass
-    def clone(self, url):
+    def clone(self, uri):
+        git.Git(self.basePath).clone(uri)
         pass
     def checkout(self, target):
         pass
@@ -16,7 +18,7 @@ class gitManage:
         pass
 
 class Exec:
-    def __init__(self, path, args, cwd = None, key = ''):
+    def __init__(self, path, args, cwd = None, key = '', git_addr = '', checkout = ''):
         self.m_run = path
         self.m_arg = [path, *args]
         self.p = None
@@ -52,14 +54,18 @@ class Exec:
         #print('errs', errs)
 
 class Manager:
-    def __init__(self, user):
+    def __init__(self, base_path = 'temp'):
+        from pathlib import Path
         self.jobList = []
         self.runList = []
         self.cnt = 0
+        self.base_path = base_path
+        Path(base_path).mkdir(parents=True, exist_ok=True)
         pass
 
     def setWork(self, job):
         self.jobList.append(job)
+        self.jobList[-1].checkout()
         self.jobList[-1].exec()
         self.jobList[-1].id = self.cnt
         self.cnt += 1
@@ -71,7 +77,7 @@ class Manager:
         return self.jobList
     
     def monitor(self):
-
+        pass
 
     def reserve(self, job, startTime, duration, forceEnd = False):
         self.jobList.append(job)
@@ -88,8 +94,8 @@ class Manager:
         
 
 if __name__ == '__main__':
-    c = Exec('python', ('TestApp.py', '-m', '1234'))
-    m = Manager('swan.kim')
+    c = Exec('python', ('TestApp.py', '-m', '1234'), git_addr='git@github.com:SeongwanKim/RemoteExec.git', checkout='master')
+    m = Manager("D:\\Devs\\Temp")
     m.setWork(c)
     import time
     for i in range(4):
@@ -98,4 +104,3 @@ if __name__ == '__main__':
         print(s)
         time.sleep(5)
     m.getWork().terminate()
-
