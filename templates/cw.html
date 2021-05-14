@@ -1,0 +1,25 @@
+{% extends "base.html"  %}
+{% block content %}
+<h2>날짜--: {{ t_date }}</h2>
+<div style="position: relative">
+    <div style="position: absolute; top: 150px; left: 200px; width: 50px; background: #C0FFEE;">
+        I am on TOP of the table!
+    </div>
+    <table border = 1  style="position: relative">
+        <tr> 
+            <th width = "50px"></th>
+            {% for x in range(7) %}
+                <th width="100px">{{x}} 요일</th>
+            {%endfor%}    
+        </tr>
+        {% for h in range(24) %}
+        <tr> 
+            <td>{{h}}</td>
+            {% for x in range(7) %}
+                <td>{{x}} 요일 <BR/>{{h}} ~ {{h+1}} 시</td>
+            {%endfor%}    
+        </tr>
+        {%endfor%}    
+    </table>
+</div>
+{% endblock %}
