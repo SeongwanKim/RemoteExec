@@ -31,6 +31,8 @@ class Exec:
         self.st_time = None
         self.ed_time = None
         self.forceEnd = False
+        self.id = -1
+        self.pid = -1
     def exec(self):
         import os 
         print (os.getcwd())
@@ -41,7 +43,7 @@ class Exec:
     def __str__(self):
         return self.__repr__()
     def __repr__(self):
-        ret = f"{self.id}, {self.p.pid}, {self.st_time}, {self.ed_time}, {self.forceEnd}, {' '.join(self.m_arg)}"
+        ret = f"{self.id}, {self.st_time}, {self.ed_time}, {self.forceEnd}, {' '.join(self.m_arg)}"
         return ret
         
     def grep(self, pattern = '.*'):

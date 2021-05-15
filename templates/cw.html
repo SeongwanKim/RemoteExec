@@ -1,10 +1,12 @@
 {% extends "base.html"  %}
 {% block content %}
-<h2>날짜--: {{ t_date }}</h2>
+<h2>날짜--: {{ t_date }}, : {{t_date}}</h2>
 <div style="position: relative">
-    <div style="position: absolute; top: 150px; left: 200px; width: 50px; background: #C0FFEE;">
-        I am on TOP of the table!
+    {% for i in range(n_divs) %}
+    <div style="position: absolute; top: 150px; left: {{100 + i*100}}px; width: 50px; background: #C0FFEE; z-index: 20;">
+        {{divs[i]}}
     </div>
+    {% endfor %}
     <table border = 1  style="position: relative">
         <tr> 
             <th width = "50px"></th>
