@@ -1,21 +1,40 @@
 {% extends "base.html"  %}
 {% block content %}
+<style>
+    table {
+      border: 1px solid #444444;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #444444;
+    }
+  </style>
 <h2>날짜--: {{ t_date }}, : {{t_date}}</h2>
+<a href="cw-{{target_date - day*7}}">last week</a>
+<a href="cw-">today</a>
+<a href="cw-{{target_date + day*7}}">next week</a>
+
 <div style="position: relative">
     {% for i in range(n_divs) %}
-    <div style="position: absolute; top: 150px; left: {{100 + i*100}}px; width: 50px; background: #C0FFEE; z-index: 20;">
-        {{divs[i]}}
+    <div style="position: absolute; top: {{divs[i].y}}px; left: {{divs[i].x}}px; width: 50px; height: {{divs[i].h}}px;  background: #C0FFEE; z-index: 20;">
+        {{divs[i].y}}, {{divs[i].x}}
+        {{divs[i].st_time.weekday() + 1}}
+        {{divs[i].h}}
+        {{divs[i].st_time.strftime("%H:%M")}}
     </div>
     {% endfor %}
-    <table border = 1  style="position: relative">
-        <tr> 
+    <table border = 0  style="position: relative">
+        <tr height="30px"> 
             <th width = "50px"></th>
             {% for x in range(7) %}
-                <th width="100px">{{x}} 요일</th>
+                <th width="100px">
+                    {{(st_date + day * x).strftime("%m/%d")}}
+                    {{(st_date + day * x).strftime("%a")}}
+                </th>
             {%endfor%}    
         </tr>
         {% for h in range(24) %}
-        <tr> 
+        <tr height="60px"> 
             <td>{{h}}</td>
             {% for x in range(7) %}
                 <td>{{x}} 요일 <BR/>{{h}} ~ {{h+1}} 시</td>
