@@ -28,6 +28,14 @@ class sqlite(DB):
             self.cur.execute('''CREATE TABLE jobs2
                 (exe text, args text, st_time datetime, ed_time datetime, log text)
             ''')
+    def select(self, query):
+        pass
+    def insert(self, value):
+        pass
+    def update(self, where, value):
+        pass
+    def remove(self, where):
+        pass            
 
 if __name__ == '__main__':
     db = sqlite('test.db')
