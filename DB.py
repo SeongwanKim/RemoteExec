@@ -24,11 +24,20 @@ class sqlite(DB):
         tbls = self.cur.fetchall() 
         print(tbls)
         if ('jobs',) not in tbls:
-            print('create table for jobs2')
-            self.cur.execute('''CREATE TABLE jobs2
-                (exe text, args text, st_time datetime, ed_time datetime, log text)
+            print('create table for jobs')
+            self.cur.execute('''CREATE TABLE jobs
+                (user text, resource text,
+                gitAddr text, checkout text, exec text, 
+                st_time datetime, ed_time datetime, 
+                log text)
             ''')
-    def select(self, query):
+    def select(self, query = None):
+        if query:
+            ret = self.cur.execute(f'select * from jobs where {query}')
+        else:
+            ret = self.cur.execute('select * from jobs')
+        print ret
+        return ret
         pass
     def insert(self, value):
         pass
