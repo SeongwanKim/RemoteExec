@@ -1,6 +1,8 @@
 from flask import Flask, render_template_string, render_template
 import os 
 import datetime
+
+from flask.wrappers import Request
 from main import Exec
 
 app = Flask(__name__)
@@ -26,8 +28,14 @@ def cw(target_date = today ):
     kwargs['divs'] = jobs
     kwargs['n_divs'] = len(jobs)
     kwargs['day'] = datetime.timedelta(days = 1)
-    
     return render_template('cw.html', **kwargs)
+
+@app.route('/addJob', methods=['POST'])
+def addjob():
+    print(Request.is_json)
+    params = request.get_json()
+    print(params['user_id'])
+    return 'ok'    
 
 if __name__ == '__main__':
     j1 = Exec("test1", ['-a', '1'])

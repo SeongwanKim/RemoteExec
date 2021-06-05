@@ -36,7 +36,7 @@ class sqlite(DB):
             ret = self.cur.execute(f'select * from jobs where {query}')
         else:
             ret = self.cur.execute('select * from jobs')
-        print ret
+        print(ret)
         return ret
         pass
     def insert(self, value):

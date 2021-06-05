@@ -8,7 +8,18 @@
     th, td {
       border: 1px solid #444444;
     }
-  </style>
+</style>
+<script>
+    function show_job(jid) {
+      var x = document.getElementById(jid);
+      if (x.style.display === "none") {
+        x.style.display = "block";
+      } else {
+        x.style.display = "none";
+      }
+    }
+</script>
+
 <h2>날짜--: {{ t_date }}, : {{t_date}}</h2>
 <a href="cw-{{target_date - day*7}}">last week</a>
 <a href="cw-">today</a>
@@ -16,11 +27,18 @@
 
 <div style="position: relative">
     {% for i in range(n_divs) %}
-    <div style="position: absolute; top: {{divs[i].y}}px; left: {{divs[i].x}}px; width: 50px; height: {{divs[i].h}}px;  background: #C0FFEE; z-index: 20;">
+    <div style="position: absolute; top: {{divs[i].y}}px; left: {{divs[i].x}}px; width: 50px; height: {{divs[i].h}}px;  background: #C0FFEE; z-index: 20;" onclick=show_job("job_{{i}}")>
         {{divs[i].y}}, {{divs[i].x}}
         {{divs[i].st_time.weekday() + 1}}
         {{divs[i].h}}
         {{divs[i].st_time.strftime("%H:%M")}}
+    </div>
+    <div style="position: absolute; top: {{divs[i].y}}px; left: {{divs[i].x}}px; width: 100px; height: {{divs[i].h}}px;  background: #C0FFEE; z-index: 40; display:none" id="job_{{i}}" onclick=show_job("job_{{i}}")>
+        {{divs[i].y}}, {{divs[i].x}}
+        {{divs[i].st_time.weekday() + 1}}
+        {{divs[i].h}}
+        {{divs[i].st_time.strftime("%H:%M")}}
+        shown
     </div>
     {% endfor %}
     <table border = 0  style="position: relative">
