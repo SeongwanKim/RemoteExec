@@ -33,12 +33,8 @@
         {{divs[i].h}}
         {{divs[i].st_time.strftime("%H:%M")}}
     </div>
-    <div style="position: absolute; top: {{divs[i].y}}px; left: {{divs[i].x}}px; width: 100px; height: {{divs[i].h}}px;  background: #C0FFEE; z-index: 40; display:none" id="job_{{i}}" onclick=show_job("job_{{i}}")>
-        {{divs[i].y}}, {{divs[i].x}}
-        {{divs[i].st_time.weekday() + 1}}
-        {{divs[i].h}}
-        {{divs[i].st_time.strftime("%H:%M")}}
-        shown
+    <div style="position: absolute; top: {{divs[i].y}}px; left: {{divs[i].x}}px;   background: #C0FFEE; z-index: 40; display:none" id="job_{{i}}" onclick=show_job("job_{{i}}")>
+        <pre>{{divs[i]}}</pre>
     </div>
     {% endfor %}
     <table border = 0  style="position: relative">

@@ -18,9 +18,16 @@ class gitManage:
         pass
 
 class Exec:
-    def __init__(self, path, args, cwd = None, key = '', git_addr = '', checkout = ''):
-        self.m_run = path
-        self.m_arg = [path, *args]
+    def __init__(self, 
+    exec, 
+    cwd = None, 
+    key = '', 
+    git_addr = '', 
+    checkout = '', 
+    user='None',
+    resource=''
+    ):
+        self.m_arg = exec
         self.p = None
         self.cwd = cwd
         if key == '':
@@ -43,7 +50,12 @@ class Exec:
     def __str__(self):
         return self.__repr__()
     def __repr__(self):
-        ret = f"{self.id}, {self.st_time}, {self.ed_time}, {self.forceEnd}, {' '.join(self.m_arg)}"
+        ret = (f"{self.id}\n"
+        f"{self.st_time}\n"
+        f"{self.ed_time}\n"
+        f"{self.forceEnd}\n"
+        f"arg: {' '.join(self.m_arg)}"
+        )
         return ret
         
     def grep(self, pattern = '.*'):
