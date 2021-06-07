@@ -1,8 +1,8 @@
-from flask import Flask, render_template_string, render_template
+from flask import Flask, render_template_string, render_template, request
 import os 
+import DB
 import datetime
 
-from flask.wrappers import Request
 from main import Exec
 
 app = Flask(__name__)
@@ -30,12 +30,18 @@ def cw(target_date = today ):
     kwargs['day'] = datetime.timedelta(days = 1)
     return render_template('cw.html', **kwargs)
 
-@app.route('/addJob', methods=['POST'])
+@app.route('/addjob')
 def addjob():
-    print(Request.is_json)
-    params = request.get_json()
-    print(params['user_id'])
-    return 'ok'    
+    kwargs = {}
+    return render_template('addJob.html', **kwargs)
+
+
+@app.route('/addjob', methods=['POST'])
+def addjobPost():
+    db = DB.sqlite('schedule.db')
+    params = request.form
+    db.insert(params)
+    return db.select()
 
 if __name__ == '__main__':
     j1 = Exec("test1", ['-a', '1'])

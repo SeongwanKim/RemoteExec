@@ -1,0 +1,16 @@
+{% extends "base.html"  %}
+{% block content %}
+Add job format:
+<form action="#" method="post">
+    <legend> Create Job</legend>
+    User ID: <input type="text" nam  e="userID" required/> <br/>
+    Estimated resource usage: <input type="text" name="resource" value="all"/> <br/>
+    git address: <input type="text" name ="gitaddr"/> <br/>
+    checkout address: <input type="text" name="checkout"/> <br/>
+    exec target:  <input type="text" name="exec" /> <br/>
+    start time: <input type="datetime" bname="st"> <br/>
+    end time: <input type="datetime" bname="ed"> <br/>
+    <input type="submit" value = "Create!">
+</form>
+user 
+{% endblock %}

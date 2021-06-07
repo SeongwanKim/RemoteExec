@@ -1,4 +1,5 @@
 import sqlite3
+import datetime
 
 
 class DB:
@@ -26,7 +27,8 @@ class sqlite(DB):
         if ('jobs',) not in tbls:
             print('create table for jobs')
             self.cur.execute('''CREATE TABLE jobs
-                (user text, resource text,
+                ( idx integer primary key autoincrement,
+                user text, resource text,
                 gitAddr text, checkout text, exec text, 
                 st_time datetime, ed_time datetime, 
                 log text)
@@ -36,10 +38,16 @@ class sqlite(DB):
             ret = self.cur.execute(f'select * from jobs where {query}')
         else:
             ret = self.cur.execute('select * from jobs')
-        print(ret)
+        for x in ret:
+            print(x)
         return ret
         pass
     def insert(self, value):
+        # check availablity in the time slot
+        exec_str = f"insert into jobs {str(tuple(value.keys()))} values {str(tuple(value.values()))}"
+        print(exec_str)
+        self.cur.execute(exec_str)
+        self.con.commit()
         pass
     def update(self, where, value):
         pass
@@ -47,5 +55,24 @@ class sqlite(DB):
         pass            
 
 if __name__ == '__main__':
-    db = sqlite('test.db')
+    db = sqlite('sample.db')
+    db.insert({
+        'user': 'user01',
+        'resource': 'none',
+        'gitAddr':'',
+        'checkout':'',
+        'exec':'python --version',
+        'st_time':(datetime.datetime(2021,6,7,9,30)).isoformat(),
+        'ed_time':(datetime.datetime(2021,6,7,11,0)).isoformat()
+    })
+    db.insert({
+        'user': 'user02',
+        'resource': 'none',
+        'gitAddr':'',
+        'checkout':'',
+        'exec':'pip list',
+        'st_time':(datetime.datetime(2021,6,8,15,0)).isoformat(),
+        'ed_time':(datetime.datetime(2021,6,8,17,45)).isoformat()
+    })
+    db.select()
 
