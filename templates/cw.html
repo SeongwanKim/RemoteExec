@@ -21,10 +21,10 @@
 </script>
 
 <h2>날짜--: {{ st_date }}, : {{target_date}}</h2>
-<a href="cw-{{target_date - day*7}}">last week</a>
-<a href="cw-">today</a>
-<a href="cw-{{target_date + day*7}}">next week</a>
-<a href="addjob">create job</a>
+<a href="?target_date={{target_date - day*7}}">last week</a>
+<a href="/cw">today</a>
+<a href="?target_date={{target_date + day*7}}">next week</a>
+<a href="/addjob">create job</a>
 
 <div style="position: relative">
     {% for i in range(n_divs) %}
