@@ -62,8 +62,8 @@ if __name__ == '__main__':
         'gitAddr':'',
         'checkout':'',
         'exec':'python --version',
-        'st_time':(datetime.datetime(2021,6,7,9,30)).isoformat(),
-        'ed_time':(datetime.datetime(2021,6,7,11,0)).isoformat()
+        'st_time':(datetime.datetime(2021,7,1,9,30)).isoformat(),
+        'ed_time':(datetime.datetime(2021,7,1,11,0)).isoformat()
     })
     db.insert({
         'user': 'user02',
@@ -71,8 +71,17 @@ if __name__ == '__main__':
         'gitAddr':'',
         'checkout':'',
         'exec':'pip list',
-        'st_time':(datetime.datetime(2021,6,8,15,0)).isoformat(),
-        'ed_time':(datetime.datetime(2021,6,8,17,45)).isoformat()
+        'st_time':(datetime.datetime(2021,7,2,15,0)).isoformat(),
+        'ed_time':(datetime.datetime(2021,7,2,17,45)).isoformat()
+    })
+    db.insert({
+        'user': 'user00',
+        'resource': 'none',
+        'gitAddr':'git@github.com:SeongwanKim/RemoteExec.git',
+        'checkout':'master',
+        'exec':'python TestApp.py',
+        'st_time':(datetime.datetime(2021,7,3,15,0)).isoformat(),
+        'ed_time':(datetime.datetime(2021,7,3,17,45)).isoformat()
     })
     db.select()
 
