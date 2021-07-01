@@ -19,13 +19,15 @@ class gitManage:
 
 class Exec:
     def __init__(self, 
-    exec, 
-    cwd = None, 
-    key = '', 
+    idx, # dummy
+    user='None',
+    resource='',
     git_addr = '', 
     checkout = '', 
-    user='None',
-    resource=''
+    exec='', 
+    st_time='',
+    ed_time='',
+    log = '' #dummy
     ):
         self.m_arg = exec
         self.p = None
