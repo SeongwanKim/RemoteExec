@@ -1,6 +1,6 @@
 import sqlite3
 import datetime
-from main import Exec
+from worker import Exec
 
 
 class DB:
@@ -42,7 +42,8 @@ class sqlite(DB):
             ret = self.cur.execute('select * from jobs')
         for x in ret:
             print(x)
-        return ret
+            exec_lst = Exec(*x)
+        return exec_lst
         pass
     def insert(self, value):
         # check availablity in the time slot
