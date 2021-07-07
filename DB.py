@@ -59,31 +59,35 @@ class sqlite(DB):
 
 if __name__ == '__main__':
     db = sqlite('sample.db')
-    # db.insert({
-    #     'user': 'user01',
-    #     'resource': 'none',
-    #     'gitAddr':'',
-    #     'checkout':'',
-    #     'exec':'python --version',
-    #     'st_time':(datetime.datetime(2021,7,1,9,30)).isoformat(),
-    #     'ed_time':(datetime.datetime(2021,7,1,11,0)).isoformat()
-    # })
-    # db.insert({
-    #     'user': 'user02',
-    #     'resource': 'none',
-    #     'gitAddr':'',
-    #     'checkout':'',
-    #     'exec':'pip list',
-    #     'st_time':(datetime.datetime(2021,7,2,15,0)).isoformat(),
-    #     'ed_time':(datetime.datetime(2021,7,2,17,45)).isoformat()
-    # })
-    # db.insert({
-    #     'user': 'user00',
-    #     'resource': 'none',
-    #     'gitAddr':'git@github.com:SeongwanKim/RemoteExec.git',
-    #     'checkout':'master',
-    #     'exec':'python TestApp.py',
-    #     'st_time':(datetime.datetime(2021,7,3,15,0)).isoformat(),
-    #     'ed_time':(datetime.datetime(2021,7,3,17,45)).isoformat()
-    # })
-    db.select()
+    lst = db.select()
+    if len(lst) == 0:
+        db.insert({
+            'user': 'user01',
+            'resource': 'none',
+            'gitAddr':'',
+            'checkout':'',
+            'exec':'python --version',
+            'st_time':(datetime.datetime(2021,7,1,9,30)).isoformat(),
+            'ed_time':(datetime.datetime(2021,7,1,11,0)).isoformat()
+        })
+        db.insert({
+            'user': 'user02',
+            'resource': 'none',
+            'gitAddr':'',
+            'checkout':'',
+            'exec':'pip list',
+            'st_time':(datetime.datetime(2021,7,2,15,0)).isoformat(),
+            'ed_time':(datetime.datetime(2021,7,2,17,45)).isoformat()
+        })
+        db.insert({
+            'user': 'user00',
+            'resource': 'none',
+            'gitAddr':'git@github.com:SeongwanKim/RemoteExec.git',
+            'checkout':'master',
+            'exec':'python TestApp.py',
+            'st_time':(datetime.datetime(2021,7,3,15,0)).isoformat(),
+            'ed_time':(datetime.datetime(2021,7,3,17,45)).isoformat()
+        })
+        lst = db.select()
+    for x in lst:
+        x.run()
