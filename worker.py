@@ -29,26 +29,35 @@ class Exec:
     ed_time='',
     log = '' #dummy
     ):
+        import os 
+        if not os.path.exists(user):
+            os.mkdir(user)
+        self.cwd = user
         self.m_arg = exec
         self.p = None
-        self.cwd = cwd
-        if key == '':
-            key = hashlib.sha256('_'.join(self.m_arg).encode()).hexdigest()[:16]
-        print(key)
-        self.log_fn = 'log.txt'
+        self.log_fn = f'{self.cwd}/log_{idx}.txt'
         self.log_fp = open(self.log_fn, 'w')
-        self.st_time = None
-        self.ed_time = None
+        self.st_time = st_time
+        self.ed_time = ed_time
         self.forceEnd = False
-        self.id = -1
+        self.id = idx
         self.pid = -1
+        self.git_addr = git_addr
+        self.checkout = checkout
+        self.user = user
+        self.resource = resource
     def exec(self):
         import os 
         print (os.getcwd())
-        self.p =  p = subprocess.Popen(self.m_arg, stdout=self.log_fp, cwd = self.cwd)
+        if self.git_addr != '':
+            # check out to local git 
+            print('check out git from ...')
+            pass
+
+        self.p = subprocess.Popen(shlex.split(self.m_arg), stdout=self.log_fp, cwd = self.cwd)
     def terminate(self):
         self.p.terminate()
-        pass
+
     def __str__(self):
         return self.__repr__()
     def __repr__(self):

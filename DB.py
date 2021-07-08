@@ -42,7 +42,7 @@ class sqlite(DB):
             ret = self.cur.execute('select * from jobs')
         for x in ret:
             print(x)
-            exec_lst = Exec(*x)
+            exec_lst.append(Exec(*x))
         return exec_lst
         pass
     def insert(self, value):
@@ -90,4 +90,4 @@ if __name__ == '__main__':
         })
         lst = db.select()
     for x in lst:
-        x.run()
+        x.exec()
