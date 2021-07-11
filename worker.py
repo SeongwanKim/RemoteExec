@@ -1,15 +1,22 @@
 import subprocess
-import git 
 import shlex
 import hashlib
 
 class gitManage:
     def __init__(self, path, uri = ''):
         self.basePath = path
+        self.rsa_key = 'C:/Users/seong/.ssh/id_rsa'
         pass
     def clone(self, uri):
-        git.Git(self.basePath).clone(uri)
-        pass
+        gitAddrExists = False
+        if gitAddrExists:
+            pass
+        else:
+            #git.Git(self.basePath).clone(uri)
+            Repo.clone_from(t.git_addr, t.cwd + '_git',
+             env={"GIT_SSH_COMMAND": f'ssh -o StrictHostKeyChecking=no -i {self.rsa_key}'})
+
+            pass
     def checkout(self, target):
         pass
     def commit(self, target, message):
@@ -50,6 +57,10 @@ class Exec:
         import os 
         print (os.getcwd())
         if self.git_addr != '':
+            self.git_manager = gitManage(self.cwd)
+            #if (os.path.exists() )
+            self.git_manager.clone(self.git_addr)
+            self.git_manager.checkout(self.checkout)
             # check out to local git 
             print('check out git from ...')
             pass
