@@ -1,22 +1,24 @@
 import subprocess
 import shlex
 import hashlib
-
+from git import Repo
 class gitManage:
-    def __init__(self, path, uri = ''):
+    def __init__(self, path):
         self.basePath = path
-        self.rsa_key = 'C:/Users/seong/.ssh/id_rsa'
+        self.rsa_key = '.ssh/'
         pass
-    def clone(self, uri):
+    def register(self, user, pvt):
+        with open(f'{self.rea_key}/{user}') as fp:
+            fp.write(pvt)
+    def clone(self, uri, user = 'default'):
         gitAddrExists = False
         if gitAddrExists:
             pass
         else:
+            repo_name = uri.split('.git')[0].split('/')[-1]
             #git.Git(self.basePath).clone(uri)
-            Repo.clone_from(t.git_addr, t.cwd + '_git',
-             env={"GIT_SSH_COMMAND": f'ssh -o StrictHostKeyChecking=no -i {self.rsa_key}'})
-
-            pass
+            Repo.clone_from(uri, f'{self.basePath}/{repo_name}' ,
+             env={"GIT_SSH_COMMAND": f'ssh -o StrictHostKeyChecking=no -i {self.rsa_key}/{user}'})
     def checkout(self, target):
         pass
     def commit(self, target, message):
