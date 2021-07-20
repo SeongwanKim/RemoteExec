@@ -2,6 +2,8 @@ import subprocess
 import shlex
 import hashlib
 from git import Repo
+from datetime import datetime
+
 class gitManage:
     def __init__(self, path):
         self.basePath = path
@@ -46,8 +48,8 @@ class Exec:
         self.p = None
         self.log_fn = f'{self.cwd}/log_{idx}.txt'
         self.log_fp = open(self.log_fn, 'w')
-        self.st_time = st_time
-        self.ed_time = ed_time
+        self.st_time = datetime.fromisoformat(st_time)
+        self.ed_time = datetime.fromisoformat(ed_time)
         self.forceEnd = False
         self.id = idx
         self.pid = -1
@@ -100,6 +102,8 @@ class Manager:
         self.base_path = base_path
         Path(base_path).mkdir(parents=True, exist_ok=True)
         pass
+
+
 
     def setWork(self, job):
         self.jobList.append(job)

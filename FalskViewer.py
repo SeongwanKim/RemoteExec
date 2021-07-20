@@ -1,9 +1,10 @@
 from flask import Flask, render_template_string, render_template, request
 import os 
-import DB
+from DB import sqlite
 import datetime
 
-from main import Exec
+
+from worker import Exec
 
 app = Flask(__name__)
 today = datetime.date.today().isoformat()
@@ -44,14 +45,6 @@ def addjobPost():
     return db.select()
 
 if __name__ == '__main__':
-    j1 = Exec("test1", ['-a', '1'])
-    j1.st_time = datetime.datetime(2021,5,13,9,30)
-    j1.ed_time = j1.st_time + datetime.timedelta(hours = 1.5)
-    j2 = Exec("test2", ['-a', '1'])
-    j2.st_time = datetime.datetime(2021,5,14,12,00)
-    j2.ed_time = j2.st_time + datetime.timedelta(hours = 2.5)
-    j3 = Exec("test3", ['-a', '1'])
-    j3.st_time = datetime.datetime(2021,5,15,14,00)
-    j3.ed_time = j3.st_time + datetime.timedelta(hours = 2)
-    jobs = [j1, j2, j3]
+    db = sqlite('sample.db')
+    jobs = db.select()
     app.run(debug=True)
