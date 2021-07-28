@@ -14,7 +14,6 @@ app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 
 db = sqlite('sample.db')
-jobs = db.select()
 
 @app.get("/")
 async def read_root():
@@ -29,6 +28,8 @@ async def read_item(item_id: int, q: Optional[str] = None):
 async def cw(request: Request, target_date: Optional[str] = today):
     from datetime import date
     kwargs = {}
+    
+    jobs = db.select()
     kwargs['request'] = request
     kwargs['target_date'] = date.fromisoformat(target_date)
     kwargs['st_date'] = kwargs['target_date'] - datetime.timedelta(days = kwargs['target_date'].weekday())

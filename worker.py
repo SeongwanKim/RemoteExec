@@ -13,11 +13,12 @@ class gitManage:
         with open(f'{self.rea_key}/{user}') as fp:
             fp.write(pvt)
     def clone(self, uri, user = 'default'):
-        gitAddrExists = False
+        import os
+        repo_name = uri.split('.git')[0].split('/')[-1]
+        gitAddrExists = os.path.exists(f'{self.basePath}/{repo_name}')
         if gitAddrExists:
             pass
         else:
-            repo_name = uri.split('.git')[0].split('/')[-1]
             #git.Git(self.basePath).clone(uri)
             Repo.clone_from(uri, f'{self.basePath}/{repo_name}' ,
              env={"GIT_SSH_COMMAND": f'ssh -o StrictHostKeyChecking=no -i {self.rsa_key}/{user}'})
@@ -38,6 +39,7 @@ class Exec:
     exec='', 
     st_time='',
     ed_time='',
+    ref_date='', # dummy
     log = '' #dummy
     ):
         import os 
@@ -80,7 +82,7 @@ class Exec:
         f"{self.st_time}\n"
         f"{self.ed_time}\n"
         f"{self.forceEnd}\n"
-        f"arg: {' '.join(self.m_arg)}"
+        f"arg: {self.m_arg}"
         )
         return ret
         
@@ -136,13 +138,5 @@ class Manager:
         
 
 if __name__ == '__main__':
-    c = Exec('python', ('TestApp.py', '-m', '1234'), git_addr='git@github.com:SeongwanKim/RemoteExec.git', checkout='master')
-    m = Manager("D:\\Devs\\Temp")
-    m.setWork(c)
-    import time
-    for i in range(4):
-        print(m.getWork())
-        s = m.getWork().grep()
-        print(s)
-        time.sleep(5)
-    m.getWork().terminate()
+    pass
+    

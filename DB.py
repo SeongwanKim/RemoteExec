@@ -32,6 +32,7 @@ class sqlite(DB):
                 user text, resource text,
                 gitAddr text, checkout text, exec text, 
                 st_time datetime, ed_time datetime, 
+                ref_date datetime,
                 log text)
             ''')
     def select(self, query = None):
@@ -46,7 +47,12 @@ class sqlite(DB):
         return exec_lst
         pass
     def insert(self, value):
+        from datetime import date, datetime, timedelta
+        
         # check availablity in the time slot
+        stt =  datetime.fromisoformat(value['st_time'])
+        ref_date = (stt - timedelta(days = stt.weekday())).date()
+        value['ref_date'] = ref_date.isoformat()
         exec_str = f"insert into jobs {str(tuple(value.keys()))} values {str(tuple(value.values()))}"
         print(exec_str)
         self.cur.execute(exec_str)
@@ -68,7 +74,7 @@ if __name__ == '__main__':
             'checkout':'',
             'exec':'python --version',
             'st_time':(datetime.datetime(2021,7,1,9,30)).isoformat(),
-            'ed_time':(datetime.datetime(2021,7,1,11,0)).isoformat()
+            'ed_time':(datetime.datetime(2021,7,1,11,0)).isoformat(),
         })
         db.insert({
             'user': 'user02',
